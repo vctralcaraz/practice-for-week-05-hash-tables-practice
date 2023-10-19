@@ -48,19 +48,46 @@ class HashTable {
       let head = this.data[index];
 
       this.data[index] = new KeyValuePair(key, value);
-      this.data[index].next = head;
       this.count++;
+      this.data[index].next = head;
 
     } else {
       this.data[index] = new KeyValuePair(key, value);
       this.count++;
     }
-
-    console.log(this.data);
   }
 
   insert(key, value) {
     // Your code here
+    const index = this.hashMod(key);
+
+    if(this.data[index] !== null) {
+      let head = this.data[index];
+
+      while(true) {
+        if(head.key === key){
+          head.value = value;
+          break;
+        }
+
+        if(head.next) {
+          head = head.next;
+        } else {
+          head = this.data[index];
+
+          this.data[index] = new KeyValuePair(key, value);
+          this.count++;
+          this.data[index].next = head;
+
+          break;
+        }
+      }
+
+    } else {
+      this.data[index] = new KeyValuePair(key, value);
+      this.count++;
+    }
+    console.log(this.data);
   }
 
 }
